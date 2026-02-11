@@ -6,7 +6,6 @@ En lugar de pensar solo en el precio en euros, la herramienta convierte esa cant
 
 El objetivo del proyecto es transformar una cifra abstracta (salario mensual o anual) en algo tangible: el valor real de cada hora trabajada y el coste real de una compra en tiempo de vida invertido.
 
----
 
 ## Demo
 
