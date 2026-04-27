@@ -1,4 +1,4 @@
-## Descripción
+## Descripción: WorthIt?
 
 Esta es una aplicación web que te permite calcular cuánto “te cuesta” realmente un producto o servicio en términos de tu tiempo de trabajo.
 
