@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d1728">
+    <title>WorthIt? | Cuánto te cuesta de verdad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="setup-screen" id="setup-screen">
+        <div class="setup-shell">
+            <article class="setup-copy">
+                <p class="eyebrow">WorthIt?</p>
+                <h1>Convierte cada compra en tiempo de trabajo real.</h1>
+                <p class="setup-text">
+                    Configura tu perfil una sola vez y, a partir de ahí, solo tendrás que añadir el producto y su precio para saber cuánto tiempo te cuesta de verdad.
+                </p>
+                <div class="setup-points">
+                    <div>
+                        <strong>Perfil guardado</strong>
+                        <span>Lo completas una vez y no vuelve a interrumpir tu flujo.</span>
+                    </div>
+                    <div>
+                        <strong>Lectura inmediata</strong>
+                        <span>Horas, días e impacto mensual al instante.</span>
+                    </div>
+                    <div>
+                        <strong>Historial ordenado</strong>
+                        <span>Todo lo calculado queda guardado debajo para compararlo.</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="setup-card">
+                <div class="section-heading">
+                    <p class="eyebrow">Primer paso</p>
+                    <h2>Crea tu perfil</h2>
+                    <p>Necesitamos estos datos para calcular el valor real de tu hora.</p>
+                </div>
+
+                <form id="profile-form" class="stack-form">
+                    <div class="grid-2">
+                        <label class="field">
+                            <span>Salario</span>
+                            <input type="number" id="salary-amount" min="1" step="0.01" placeholder="2500">
+                        </label>
+                        <label class="field">
+                            <span>Moneda</span>
+                            <select id="currency">
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="GBP">GBP</option>
+                                <option value="MXN">MXN</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="grid-3">
+                        <label class="field">
+                            <span>Periodo</span>
+                            <select id="period">
+                                <option value="monthly">Mensual</option>
+                                <option value="yearly">Anual</option>
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span>Horas al día</span>
+                            <input type="number" id="daily-hours" min="1" max="24" step="0.5" placeholder="8">
+                        </label>
+                        <label class="field">
+                            <span>Días por semana</span>
+                            <input type="number" id="weekly-days" min="1" max="7" step="1" placeholder="5">
+                        </label>
+                    </div>
+
+                    <div class="grid-3">
+                        <label class="field">
+                            <span>Vacaciones al año</span>
+                            <input type="number" id="vacation-days" min="0" max="365" step="1" placeholder="22">
+                        </label>
+                        <label class="field">
+                            <span>Objetivo de ahorro mensual</span>
+                            <input type="number" id="monthly-goal" min="0" step="0.01" placeholder="400">
+                        </label>
+                        <label class="field">
+                            <span>Umbral de compra importante</span>
+                            <input type="number" id="alert-threshold" min="0" step="0.01" placeholder="120">
+                        </label>
+                    </div>
+
+                    <div class="inline-actions">
+                        <button class="primary-button" type="submit">Entrar en la app</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+
+    <div class="app-shell" id="app-shell" hidden>
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                    <span></span>
+                </div>
+                <div class="brand-copy">
+                    <p class="eyebrow">Finanzas personales</p>
+                    <h2>WorthIt?</h2>
+                </div>
+            </div>
+
+            <nav class="topbar-actions" aria-label="Acciones globales">
+                <button class="secondary-button" id="theme-toggle" type="button" aria-label="Cambiar tema">Tema</button>
+                <button class="secondary-button" id="edit-profile" type="button">Editar perfil</button>
+                <button class="ghost-button" id="reset-profile" type="button">Rehacer perfil</button>
+            </nav>
+        </header>
+
+        <main class="layout">
+            <section class="hero-band">
+                <article class="hero-card">
+                    <div class="hero-copy">
+                        <p class="eyebrow">Resumen</p>
+                        <h1>Calcula una compra antes de pagarla.</h1>
+                        <p>
+                            Añade el nombre y el precio para ver cuántas horas de trabajo te exige y cómo afecta a tu ahorro mensual.
+                        </p>
+                    </div>
+
+                    <div class="summary-grid">
+                        <article class="summary-tile">
+                            <span>Valor por hora</span>
+                            <strong id="hero-hourly-rate">--</strong>
+                            <p id="hero-schedule">Completa tu perfil para activar el cálculo.</p>
+                        </article>
+                        <article class="summary-tile">
+                            <span>Último cálculo</span>
+                            <strong id="hero-last-item">Sin registrar</strong>
+                            <p id="hero-last-time">Aún no has calculado ninguna compra.</p>
+                        </article>
+                    </div>
+                </article>
+            </section>
+
+            <section class="main-grid">
+                <article class="panel calculator-panel" id="calculator-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">Compra</p>
+                            <h3>¿Qué quieres comprar?</h3>
+                            <p class="panel-copy">Introduce el producto, su precio y el tipo de gasto para saber si compensa.</p>
+                        </div>
+                        <span class="status-pill" id="profile-status">Perfil listo</span>
+                    </div>
+
+                    <form id="calculator-form" class="stack-form">
+                        <div class="grid-3">
+                            <label class="field field-grow">
+                                <span>Nombre</span>
+                                <input type="text" id="item-name" maxlength="60" placeholder="Auriculares, café, suscripción...">
+                            </label>
+                            <label class="field">
+                                <span>Cuánto cuesta</span>
+                                <input type="number" id="item-cost" min="0.01" step="0.01" placeholder="89.99">
+                            </label>
+                            <label class="field">
+                                <span>Categoría</span>
+                                <select id="item-category">
+                                    <option value="Tecnología">Tecnología</option>
+                                    <option value="Hogar">Hogar</option>
+                                    <option value="Ocio">Ocio</option>
+                                    <option value="Comida">Comida</option>
+                                    <option value="Transporte">Transporte</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Formación">Formación</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="grid-2">
+                            <label class="field">
+                                <span>Frecuencia</span>
+                                <select id="item-frequency">
+                                    <option value="one-time">Compra puntual</option>
+                                    <option value="monthly">Mensual</option>
+                                    <option value="yearly">Anual</option>
+                                </select>
+                            </label>
+                            <label class="field">
+                                <span>Notas</span>
+                                <input type="text" id="item-notes" maxlength="90" placeholder="Opcional">
+                            </label>
+                        </div>
+
+                        <div class="inline-actions">
+                            <button class="primary-button" type="submit">Calcular compra</button>
+                            <button class="secondary-button" id="clear-result" type="button">Limpiar resultado</button>
+                        </div>
+                    </form>
+
+                    <article class="result-card" id="result-card" aria-live="polite">
+                        <div class="result-main">
+                            <p class="eyebrow">Resultado</p>
+                            <h4 id="result-headline">Aquí verás cuánto trabajo real te pide cada compra.</h4>
+                            <p id="result-copy">Calcula una compra para ver horas, días e impacto sobre tu objetivo mensual.</p>
+                        </div>
+                        <div class="result-grid">
+                            <div>
+                                <span>Horas</span>
+                                <strong id="result-hours">--</strong>
+                            </div>
+                            <div>
+                                <span>Días</span>
+                                <strong id="result-days">--</strong>
+                            </div>
+                            <div>
+                                <span>Impacto mensual</span>
+                                <strong id="result-impact">--</strong>
+                            </div>
+                            <div>
+                                <span>Nivel</span>
+                                <strong id="result-severity">--</strong>
+                            </div>
+                        </div>
+                    </article>
+                </article>
+
+                <aside class="panel insights-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">Vista rápida</p>
+                            <h3>Lo esencial</h3>
+                            <p class="panel-copy">Tu referencia salarial y el impacto acumulado, sin ruido.</p>
+                        </div>
+                    </div>
+
+                    <div class="metric-grid">
+                        <article class="metric-card">
+                            <span>Ingreso por hora</span>
+                            <strong id="metric-hourly">--</strong>
+                        </article>
+                        <article class="metric-card">
+                            <span>Tiempo invertido este mes</span>
+                            <strong id="metric-time-month">--</strong>
+                        </article>
+                        <article class="metric-card">
+                            <span>Gasto recurrente</span>
+                            <strong id="metric-recurring">--</strong>
+                        </article>
+                        <article class="metric-card">
+                            <span>Margen hacia tu ahorro</span>
+                            <strong id="metric-savings">--</strong>
+                        </article>
+                    </div>
+
+                    <article class="insight-box" id="smart-insight">
+                        <p class="eyebrow">Insight</p>
+                        <h4>Sin datos todavía</h4>
+                        <p>Tu historial empezará a darte contexto en cuanto guardes compras.</p>
+                    </article>
+                </aside>
+            </section>
+
+            <section class="history-section">
+                <article class="panel history-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">Historial</p>
+                            <h3>Lo que ya has calculado</h3>
+                            <p class="panel-copy">Todas tus compras quedan guardadas aquí para compararlas después.</p>
+                        </div>
+                        <div class="inline-actions compact">
+                            <input class="search-input" type="search" id="history-search" placeholder="Buscar por nombre o nota">
+                            <select id="history-filter">
+                                <option value="all">Todas</option>
+                                <option value="high">Importantes</option>
+                                <option value="monthly">Mensuales</option>
+                                <option value="yearly">Anuales</option>
+                            </select>
+                            <button class="ghost-button" id="export-csv" type="button">Exportar CSV</button>
+                            <button class="ghost-button" id="export-json" type="button">Exportar JSON</button>
+                        </div>
+                    </div>
+
+                    <div class="history-list" id="history-list"></div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
